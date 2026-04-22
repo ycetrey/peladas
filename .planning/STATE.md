@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Phase 1: código e planos executados; validar com Docker (`docker compose up`, migrate, seed)"
-last_updated: "2026-04-22T12:00:00.000Z"
-last_activity: "2026-04-22 — execute-phase 1: apps/api (Nest+Prisma), Next apps, migração SQL + SUMMARYs"
+stopped_at: "Phase 2: API partidas + testes; validar com /gsd-verify-work 2"
+last_updated: "2026-04-23T12:00:00.000Z"
+last_activity: "2026-04-23 — execute-phase 2: ERR-01, MatchRules, MatchesModule, e2e, README"
 progress:
   total_phases: 6
-  completed_phases: 0
-  total_plans: 4
-  completed_plans: 4
-  percent: 15
+  completed_phases: 2
+  total_plans: 7
+  completed_plans: 7
+  percent: 35
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-22)
 
 **Core value:** Organizar uma pelada do “quem vai?” até os dois times prontos, com regras claras e erros previsíveis.  
-**Current focus:** Phase 2 — Partidas (planos 02-01..02-03 prontos; executar após validar Phase 1)
+**Current focus:** Phase 3 — Inscrições (após `/gsd-verify-work 2` ou confirmação manual)
 
 ## Current Position
 
-Phase: 1 of 6 (Fundação Docker, Prisma e API shell) — implementação entregue  
-Plan: 4 of 4 in current phase  
-Status: Verify locally (Docker + `prisma migrate deploy` + `db seed`)  
-Last activity: 2026-04-22 — execute-phase 1 concluído (4 SUMMARYs); builds Nest/Next OK no host
+Phase: 2 of 6 (Partidas API) — implementação entregue  
+Plan: 3 of 3 in phase 2  
+Status: Verificar com UAT / uso local (`pnpm test`, `test:e2e` com Postgres)  
+Last activity: 2026-04-23 — execute-phase 2 concluído (3 SUMMARYs)
 
-Progress: [█░░░░░░░░░] 15%
+Progress: [███░░░░░░░] 35%
 
 ## Performance Metrics
 
