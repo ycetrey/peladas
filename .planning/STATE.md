@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-22)
 
 **Core value:** Organizar uma pelada do “quem vai?” até os dois times prontos, com regras claras e erros previsíveis.  
-**Current focus:** Phase 2 — Partidas (após validar Phase 1 com Docker)
+**Current focus:** Phase 2 — Partidas (planos 02-01..02-03 prontos; executar após validar Phase 1)
 
 ## Current Position
 
