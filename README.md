@@ -28,6 +28,15 @@ Na primeira execução o build pode demorar (imagens Node + dependências).
 
 Copia `.env.example` para `.env` e ajusta portas se precisares.
 
+### Depois do primeiro `docker compose up -d db`
+
+Com Postgres a correr e `DATABASE_URL` a apontar para `localhost` (ver `.env.example`):
+
+```bash
+npx pnpm@9.15.0 --filter @peladas/api exec prisma migrate deploy
+npx pnpm@9.15.0 --filter @peladas/api exec prisma db seed
+```
+
 ## Monorepo
 
 - `apps/api` — NestJS + Prisma  
