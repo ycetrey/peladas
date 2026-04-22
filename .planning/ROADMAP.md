@@ -47,7 +47,13 @@ Plans:
   2. Cliente pode **listar** partidas e **abrir detalhe** por id
   3. Estados necessários para fluxo v1 (ex.: `OPEN`) estão **disponíveis** na criação ou transição mínima documentada
   4. Respostas de API expõem **erros de negócio** nomeados (partida não aberta, inscrição fechada, usuário já inscrito, estado inválido) de forma consistente para integração
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+
+- [ ] 02-01: Erros de domínio + filtro HTTP + Jest mínimo (`02-01-PLAN.md`)
+- [ ] 02-02: MatchRulesService + testes RULE-01 (`02-02-PLAN.md`)
+- [ ] 02-03: HTTP matches + e2e + README (`02-03-PLAN.md`)
 
 ### Phase 3: Inscrições, fila e cancelamento
 **Goal**: Jogador inscreve-se em pelada aberta; fila de titulares/reservas funciona; cancelamento promove reserva.
@@ -102,7 +108,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Fundação Docker, Prisma e API shell | 4/4 | Complete (verify Docker locally) | 2026-04-22 |
-| 2. Partidas — criação, leitura e erros | 0/TBD | Not started | - |
+| 2. Partidas — criação, leitura e erros | 0/3 | Planned | - |
 | 3. Inscrições, fila e cancelamento | 0/TBD | Not started | - |
 | 4. Geração de times A/B | 0/TBD | Not started | - |
 | 5. App Next.js jogador | 0/TBD | Not started | - |
