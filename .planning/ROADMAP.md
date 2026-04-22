@@ -11,7 +11,7 @@ Entregar Peladas em camadas que liberam valor cedo: primeiro o **ambiente Docker
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Fundação Docker, Prisma e API shell** — Compose sobe DB + três serviços; schema e migrations; usuário persistido; API roda em container
+- [x] **Phase 1: Fundação Docker, Prisma e API shell** — Compose sobe DB + três serviços; schema e migrations; usuário persistido; API roda em container
 - [ ] **Phase 2: Partidas — criação, leitura e erros de negócio** — Criar/listar/detalhar partida com validações de janela; contrato de erros estável
 - [ ] **Phase 3: Inscrições, fila e cancelamento** — Inscrever, bloquear duplicata, cancelar com promoção de reserva
 - [ ] **Phase 4: Geração de times A/B** — Gerar times quando lista de titulares fecha; modos alternado e sorteio ao final
@@ -33,10 +33,10 @@ Entregar Peladas em camadas que liberam valor cedo: primeiro o **ambiente Docker
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: Monorepo pnpm, Compose, Dockerfiles stub, README (`01-01-PLAN.md`)
-- [ ] 01-02: Prisma schema, migrations, seed USR-01 (`01-02-PLAN.md`)
-- [ ] 01-03: NestJS API, Dockerfile, `/health` (`01-03-PLAN.md`)
-- [ ] 01-04: Next.js jogador + admin em Docker (`01-04-PLAN.md`)
+- [x] 01-01: Monorepo pnpm, Compose, Dockerfiles stub, README (`01-01-PLAN.md`)
+- [x] 01-02: Prisma schema, migrations, seed USR-01 (`01-02-PLAN.md`)
+- [x] 01-03: NestJS API, Dockerfile, `/health` (`01-03-PLAN.md`)
+- [x] 01-04: Next.js jogador + admin em Docker (`01-04-PLAN.md`)
 
 ### Phase 2: Partidas — criação, leitura e erros de negócio
 **Goal**: Organizador (via API) cria partidas válidas; clientes listam e veem detalhe; violações de regra retornam erros de negócio previsíveis.
@@ -101,7 +101,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Fundação Docker, Prisma e API shell | 0/4 | Ready to execute | - |
+| 1. Fundação Docker, Prisma e API shell | 4/4 | Complete (verify Docker locally) | 2026-04-22 |
 | 2. Partidas — criação, leitura e erros | 0/TBD | Not started | - |
 | 3. Inscrições, fila e cancelamento | 0/TBD | Not started | - |
 | 4. Geração de times A/B | 0/TBD | Not started | - |

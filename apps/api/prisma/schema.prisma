@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MatchMode {
+  ALTERNATED
+  DRAW_AT_END
+}
+
+enum MatchStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  FINISHED
+  CANCELED
+}
+
+enum RegistrationStatus {
+  CONFIRMED
+  SUBSTITUTE
+  CANCELED
+}
+
+enum PlayerPosition {
+  GOALKEEPER
+  DEFENDER
+  MIDFIELDER
+  FORWARD
+  ANY
+}
+
+enum TeamName {
+  A
+  B
+}
+
+model User {
+  id                 String           @id @default(uuid()) @db.Uuid
+  name               String
+  preferredPositions PlayerPosition[]
+  isAdmin            Boolean          @default(false)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  registrations Registration[]
+  teamPlayers     TeamPlayer[]
+}
+
+model Match {
+  id                   String      @id @default(uuid()) @db.Uuid
+  title                String
+  dateTime             DateTime
+  mode                 MatchMode
+  status               MatchStatus @default(DRAFT)
+  maxPlayers           Int
+  maxSubstitutes       Int
+  registrationOpensAt  DateTime
+  registrationClosesAt DateTime
+  recurringRule        Json?
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  registrations Registration[]
+  teams         Team[]
+}
+
+model Registration {
+  id                String               @id @default(uuid()) @db.Uuid
+  matchId           String               @db.Uuid
+  userId            String               @db.Uuid
+  preferredPosition PlayerPosition
+  status            RegistrationStatus
+  queueOrder        Int
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  match       Match        @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamPlayers TeamPlayer[]
+
+  @@index([matchId, userId])
+}
+
+model Team {
+  id        String   @id @default(uuid()) @db.Uuid
+  matchId   String   @db.Uuid
+  name      TeamName
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  match   Match        @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  players TeamPlayer[]
+}
+
+model TeamPlayer {
+  id             String   @id @default(uuid()) @db.Uuid
+  teamId         String   @db.Uuid
+  userId         String   @db.Uuid
+  registrationId String   @db.Uuid
+  order          Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  team         Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  registration Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+}
