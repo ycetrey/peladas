@@ -1,0 +1,79 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: peladas
+      POSTGRES_PASSWORD: peladas
+      POSTGRES_DB: peladas
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U peladas -d peladas"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - peladas-internal
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://peladas:peladas@db:5432/peladas?schema=public
+      PORT: "3001"
+      NODE_ENV: development
+    volumes:
+      - ./apps/api:/app
+      - api_node_modules:/app/node_modules
+    ports:
+      - "${API_PORT:-3001}:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - peladas-internal
+
+  web-jogador:
+    build:
+      context: ./apps/web-jogador
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./apps/web-jogador:/app
+      - web_jogador_node_modules:/app/node_modules
+    ports:
+      - "${WEB_JOGADOR_PORT:-3002}:3000"
+    depends_on:
+      - api
+    networks:
+      - peladas-internal
+
+  web-admin:
+    build:
+      context: ./apps/web-admin
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./apps/web-admin:/app
+      - web_admin_node_modules:/app/node_modules
+    ports:
+      - "${WEB_ADMIN_PORT:-3003}:3000"
+    depends_on:
+      - api
+    networks:
+      - peladas-internal
+
+volumes:
+  postgres_data:
+  api_node_modules:
+  web_jogador_node_modules:
+  web_admin_node_modules:
+
+networks:
+  peladas-internal:
+    driver: bridge
