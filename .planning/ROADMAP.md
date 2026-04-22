@@ -65,7 +65,12 @@ Plans:
   3. Inscrição fora da janela ou com partida não aberta é **recusada** com erro adequado
   4. Ao **cancelar** inscrição de titular, o primeiro reserva **sobe** para titular na ordem da fila
   5. Quando não há vaga nem para reserva, nova inscrição é **recusada** explicitamente
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+
+- [ ] 03-01: Regras de inscrição + `NoRegistrationSlotsError` + Jest (`03-01-PLAN.md`)
+- [ ] 03-02: HTTP inscrições/cancelamento + e2e + README (`03-02-PLAN.md`)
 
 ### Phase 4: Geração de times A/B
 **Goal**: Quando todos os titulares estão confirmados, organizador gera dois times persistidos conforme modo da partida.
@@ -109,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Fundação Docker, Prisma e API shell | 4/4 | Complete (verify Docker locally) | 2026-04-22 |
 | 2. Partidas — criação, leitura e erros | 3/3 | Complete | 2026-04-23 |
-| 3. Inscrições, fila e cancelamento | 0/TBD | Not started | - |
+| 3. Inscrições, fila e cancelamento | 0/2 | Planned | - |
 | 4. Geração de times A/B | 0/TBD | Not started | - |
 | 5. App Next.js jogador | 0/TBD | Not started | - |
 | 6. App Next.js admin | 0/TBD | Not started | - |
