@@ -5,7 +5,7 @@ milestone_name: milestone
 status: ready_to_execute
 stopped_at: "Phase 5: executar /gsd-execute-phase 5"
 last_updated: "2026-04-23T12:00:00.000Z"
-last_activity: "2026-04-23 — /gsd-plan-phase 5 (2 PLANs, CONTEXT, RESEARCH, UI-SPEC, VALIDATION)"
+last_activity: "2026-04-23 — /gsd-plan-phase 5 --research (RESEARCH.md refresh + CONTEXT)"
 progress:
   total_phases: 6
   completed_phases: 4
