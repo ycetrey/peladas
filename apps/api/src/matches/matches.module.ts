@@ -9,5 +9,6 @@ import { OrganizerUserGuard } from "./organizer-user.guard";
   imports: [PrismaModule],
   controllers: [MatchesController],
   providers: [MatchesService, MatchRulesService, OrganizerUserGuard],
+  exports: [OrganizerUserGuard],
 })
 export class MatchesModule {}

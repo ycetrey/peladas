@@ -14,7 +14,7 @@ Entregar Peladas em camadas que liberam valor cedo: primeiro o **ambiente Docker
 - [x] **Phase 1: Fundação Docker, Prisma e API shell** — Compose sobe DB + três serviços; schema e migrations; usuário persistido; API roda em container
 - [x] **Phase 2: Partidas — criação, leitura e erros de negócio** — Criar/listar/detalhar partida com validações de janela; contrato de erros estável
 - [x] **Phase 3: Inscrições, fila e cancelamento** — Inscrever, bloquear duplicata, cancelar com promoção de reserva
-- [ ] **Phase 4: Geração de times A/B** — Gerar times quando lista de titulares fecha; modos alternado e sorteio ao final
+- [x] **Phase 4: Geração de times A/B** — Gerar times quando lista de titulares fecha; modos alternado e sorteio ao final
 - [ ] **Phase 5: App Next.js jogador** — Lista, inscrição/cancelamento e status na UI
 - [ ] **Phase 6: App Next.js admin** — Criar partida e acionar geração de times na UI
 
@@ -81,7 +81,12 @@ Plans:
   2. Com confirmados = `maxPlayers`, **dois times A e B** existem no banco e cada jogador confirmado aparece em **exatamente um** time
   3. Modo **ALTERNATED** produz intercalação coerente com **ordem da fila** (`queueOrder`)
   4. Modo **DRAW_AT_END** produz **partição** dos confirmados entre A e B (v1 pode usar aleatoriedade não auditável; v2 cobre seed)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+
+- [x] 04-01: Alocação A/B + erros de domínio + Jest (`04-01-PLAN.md`)
+- [x] 04-02: HTTP `POST .../teams/generate` + e2e + README (`04-02-PLAN.md`)
 
 ### Phase 5: App Next.js jogador
 **Goal**: Jogador usa interface web (container) para ver peladas, inscrever/cancelar e ver seu status.
@@ -115,6 +120,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Fundação Docker, Prisma e API shell | 4/4 | Complete (verify Docker locally) | 2026-04-22 |
 | 2. Partidas — criação, leitura e erros | 3/3 | Complete | 2026-04-23 |
 | 3. Inscrições, fila e cancelamento | 2/2 | Complete | 2026-04-22 |
-| 4. Geração de times A/B | 0/TBD | Not started | - |
+| 4. Geração de times A/B | 2/2 | Complete | 2026-04-22 |
 | 5. App Next.js jogador | 0/TBD | Not started | - |
 | 6. App Next.js admin | 0/TBD | Not started | - |

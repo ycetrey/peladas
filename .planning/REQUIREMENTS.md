@@ -33,14 +33,14 @@
 
 ### Teams (TEAM)
 
-- [ ] **TEAM-01**: Com número de confirmados igual a `maxPlayers`, **times A e B** são criados e jogadores persistidos em `TeamPlayer` conforme modo (`ALTERNATED` intercala por `queueOrder`; `DRAW_AT_END` faz split — v1 pode ser aleatório não-seed)
+- [x] **TEAM-01**: Com número de confirmados igual a `maxPlayers`, **times A e B** são criados e jogadores persistidos em `TeamPlayer` conforme modo (`ALTERNATED` intercala por `queueOrder`; `DRAW_AT_END` faz split — v1 pode ser aleatório não-seed)
 
 ### Business rules (RULE)
 
 - [ ] **RULE-01**: Criação de partida valida: abertura antes do fechamento; fechamento antes do horário da partida; `maxPlayers` inteiro positivo **par**; `maxSubstitutes` ≥ 0
 - [ ] **RULE-02**: Inscrição valida partida `OPEN` e instante atual dentro da janela de inscrição
 - [ ] **RULE-03**: Determinação de status de inscrição: até encher titulares → `CONFIRMED`; depois até limite de reservas → `SUBSTITUTE`; sem vaga → rejeição explícita
-- [ ] **RULE-04**: Alocação em times obedece ao modo da partida (alternado vs. sorteio ao final) sobre o conjunto de inscrições confirmadas
+- [x] **RULE-04**: Alocação em times obedece ao modo da partida (alternado vs. sorteio ao final) sobre o conjunto de inscrições confirmadas
 
 ### API surface (API)
 
@@ -49,7 +49,7 @@
 - [ ] **API-03**: Endpoint permite **listar partidas** (mínimo viável para telas jogador/admin)
 - [ ] **API-04**: Endpoint expõe **inscrever jogador** (RegisterPlayer) com RULE-02, RULE-03
 - [ ] **API-05**: Endpoint expõe **cancelar inscrição** (CancelRegistration) com promoção REG-03
-- [ ] **API-06**: Endpoint expõe **gerar times** (GenerateTeams) quando pré-condição de TEAM-01 satisfeita
+- [x] **API-06**: Endpoint expõe **gerar times** (GenerateTeams) quando pré-condição de TEAM-01 satisfeita
 
 ### Errors (ERR)
 
@@ -118,9 +118,9 @@ Deferred / follow-ups from domain advisory (`intel/context.md`).
 | RULE-03 | Phase 3 | Implemented |
 | API-04 | Phase 3 | Implemented |
 | API-05 | Phase 3 | Implemented |
-| TEAM-01 | Phase 4 | Pending |
-| RULE-04 | Phase 4 | Pending |
-| API-06 | Phase 4 | Pending |
+| TEAM-01 | Phase 4 | Implemented |
+| RULE-04 | Phase 4 | Implemented |
+| API-06 | Phase 4 | Implemented |
 | UIJ-01 | Phase 5 | Pending |
 | UIJ-02 | Phase 5 | Pending |
 | UIJ-03 | Phase 5 | Pending |
@@ -135,4 +135,4 @@ Deferred / follow-ups from domain advisory (`intel/context.md`).
 
 ---
 *Requirements defined: 2026-04-22*  
-*Last updated: 2026-04-22 — Phase 3 requirements marked Implemented*
+*Last updated: 2026-04-22 — Phase 4 TEAM / RULE-04 / API-06 marked Implemented*

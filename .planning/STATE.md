@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Phase 4: planear /gsd-plan-phase ou executar após contexto"
-last_updated: "2026-04-22T18:00:00.000Z"
-last_activity: "2026-04-22 — execute-phase 3 (inscrições + e2e + README)"
+stopped_at: "Phase 5: UI jogador Next.js (planos TBD) ou /gsd-plan-phase 5"
+last_updated: "2026-04-22T20:00:00.000Z"
+last_activity: "2026-04-22 — fase 4: POST teams/generate + alocação ALTERNATED/DRAW_AT_END"
 progress:
   total_phases: 6
-  completed_phases: 3
-  total_plans: 9
-  completed_plans: 9
-  percent: 50
+  completed_phases: 4
+  total_plans: 11
+  completed_plans: 11
+  percent: 67
 ---
 
 # Project State
@@ -21,58 +21,58 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-22)
 
 **Core value:** Organizar uma pelada do "quem vai?" até os dois times prontos, com regras claras e erros previsíveis.  
-**Current focus:** Phase 4 — Geração de times A/B (roadmap; planos TBD)
+**Current focus:** Phase 5 — App Next.js jogador (lista, inscrição, estado)
 
 ## Current Position
 
-Phase: 3 of 6 (Inscrições) — implementação entregue  
-Plan: 2 of 2 in phase 3  
-Status: Validar e2e com Postgres local (`SKIP_E2E=0`); próximo marco — fase 4  
-Last activity: 2026-04-22 — execute-phase 3 (SUMMARYs 03-01/03-02)
+Phase: 4 of 6 (Geração de times) — implementação API entregue  
+Plan: 2 of 2 in phase 4  
+Status: Correr e2e com Postgres; UI ainda não consome times  
+Last activity: 2026-04-22 — fase 4 completa em código + README + ROADMAP
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 9
+- Total plans completed: 11
 - Average duration: —
 - Total execution time: —
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 3 | 2 | — | — |
+| Phase | Plans | Notes |
+|-------|-------|-------|
+| 4 | 2 | Serializable + Organizer guard |
 
-**Recent trend:** Inscrições com fila e promoção no cancelamento.
+**Recent trend:** Times A/B persistidos após titulares completos.
 
 ## Accumulated Context
 
 ### Decisions
 
-- Cancelamento sem inscrição ativa: `InvalidMatchStateError` / HTTP 400, mensagem *No active registration for this match*.
-- Identidade do jogador na API: header `X-Player-User-Id` (UUID), guard espelhando organizador.
+- Geração idempotente negada: segunda chamada → `TeamsAlreadyGeneratedError`.
+- `DRAW_AT_END` v1 usa `Math.random` (ver `DRAW-01` v2).
 
 ### Pending todos
 
-- Correr `pnpm` ou `npx jest --config jest-e2e.config.cjs` em `apps/api` com `DATABASE_URL` para validar e2e de inscrições.
+- Opcional: enriquecer `GET /matches/:id` com `teams` para UIs (não feito na fase 4).
 
 ### Blockers / concerns
 
-- **Corepack / pnpm** no Windows pode falhar com erro de assinatura de chave; usar `npx nest build` / `npx jest` dentro de `apps/api` como workaround.
+- Corepack/pnpm pode falhar no Windows; usar `npx` em `apps/api` para build/test.
 
 ## Deferred items
 
 | Category | Item | Status | Deferred at |
 |----------|------|--------|-------------|
-| v2 | REG-TX-01, DRAW-01, POS-01, JOB-01 | Acknowledged | 2026-04-22 |
+| v2 | DRAW-01 seed auditável | Acknowledged | 2026-04-22 |
 
 ## Session continuity
 
 Last session: 2026-04-22  
-Stopped at: Fase 3 fechada em código e documentação; avançar para fase 4  
+Stopped at: Fase 4 API pronta; avançar planeamento/UI fase 5  
 Resume file: None
 
-**Planned phase:** 04 (Geração de times)
+**Planned phase:** 05 (App jogador)

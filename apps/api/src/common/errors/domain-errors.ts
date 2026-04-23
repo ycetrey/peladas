@@ -60,3 +60,19 @@ export class NoRegistrationSlotsError extends DomainError {
     super(message);
   }
 }
+
+export class WrongConfirmedCountForTeamsError extends DomainError {
+  readonly code = "WrongConfirmedCountForTeamsError";
+  constructor(
+    message = "Wrong number of confirmed players to generate teams for this match",
+  ) {
+    super(message);
+  }
+}
+
+export class TeamsAlreadyGeneratedError extends DomainError {
+  readonly code = "TeamsAlreadyGeneratedError";
+  constructor(message = "Teams have already been generated for this match") {
+    super(message);
+  }
+}

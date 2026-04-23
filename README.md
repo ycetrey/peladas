@@ -75,6 +75,20 @@ O jogador identifica-se com **`X-Player-User-Id`** (UUID de um `User` existente)
 - Partida fechada ou fora da janela: `RegistrationClosedError` ou `MatchNotOpenError`.
 - Sem vaga para titular nem reserva: `NoRegistrationSlotsError` (**400**).
 
+## API — Gerar times A/B (fase 4)
+
+Com **`maxPlayers`** titulares `CONFIRMED` (e janela/estado que permita as inscrições já feitas), o organizador gera os dois times:
+
+**Gerar** — `POST http://localhost:3001/matches/<matchId>/teams/generate` com **`X-Organizer-User-Id`** (igual à criação de partidas).
+
+Resposta **`201`** com `{ "teams": [ { "id", "matchId", "name", "players": [ { "order", "userId", "registrationId", "user": { ... } } ] } ] }` (dois elementos, nomes `A` e `B`).
+
+- Número de confirmados **≠** `maxPlayers`: `WrongConfirmedCountForTeamsError` (**400**).
+- Times **já** existentes para a partida: `TeamsAlreadyGeneratedError` (**400**).
+- Partida inexistente: `MatchNotFoundError` (**404**).
+- **`ALTERNATED`**: intercalação pela ordem de fila (`queueOrder` ascendente) — 1º e 3º titulares no time A, 2º e 4º no B, etc.
+- **`DRAW_AT_END`**: baralhamento (Fisher–Yates com `Math.random`) e metade dos jogadores em cada time; v2 pode substituir por seed auditável (`DRAW-01`).
+
 ## Monorepo
 
 - `apps/api` — NestJS + Prisma  
