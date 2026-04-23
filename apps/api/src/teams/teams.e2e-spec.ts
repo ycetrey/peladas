@@ -18,6 +18,13 @@ const describeE2e =
     ? describe
     : describe.skip;
 
+/** Ver `registrations.e2e-spec.ts` — alinhado a `timestamp(3)` sem TZ no Postgres. */
+const E2E_MATCH_SCHEDULE = {
+  registrationOpensAt: "2019-01-01T12:00:00.000Z",
+  registrationClosesAt: "2038-12-31T12:00:00.000Z",
+  dateTime: "2039-06-15T20:00:00.000Z",
+} as const;
+
 describeE2e("Teams generate (e2e)", () => {
   let app: import("@nestjs/common").INestApplication;
   let prisma: PrismaService;
@@ -75,18 +82,15 @@ describeE2e("Teams generate (e2e)", () => {
 
   async function createOpenMatch(mode: MatchMode, maxPlayers: number) {
     const t = Date.now();
-    const iso = (ms: number) => new Date(ms).toISOString();
     const res = await request(app.getHttpServer())
       .post("/matches")
       .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
       .send({
         title: `E2E-TEAMS-${t}-${mode}`,
-        dateTime: iso(t + 14 * 86400000),
+        ...E2E_MATCH_SCHEDULE,
         mode,
         maxPlayers,
         maxSubstitutes: 2,
-        registrationOpensAt: iso(t - 86400000),
-        registrationClosesAt: iso(t + 7 * 86400000),
       })
       .expect(201);
     return res.body.match.id as string;

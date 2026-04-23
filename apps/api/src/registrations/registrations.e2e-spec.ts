@@ -16,6 +16,13 @@ const describeE2e =
     ? describe
     : describe.skip;
 
+/** UTC fixo: Postgres usa `timestamp(3)` sem TZ; janelas relativas a `Date.now()` podem fechar ao reler o `Match`. */
+const E2E_MATCH_SCHEDULE = {
+  registrationOpensAt: "2019-01-01T12:00:00.000Z",
+  registrationClosesAt: "2038-12-31T12:00:00.000Z",
+  dateTime: "2039-06-15T20:00:00.000Z",
+} as const;
+
 describeE2e("Registrations (e2e)", () => {
   let app: import("@nestjs/common").INestApplication;
   let prisma: PrismaService;
@@ -82,16 +89,12 @@ describeE2e("Registrations (e2e)", () => {
   });
 
   it("registers titulars + substitute, rejects duplicate, promotes on titular cancel", async () => {
-    const t = Date.now();
-    const iso = (ms: number) => new Date(ms).toISOString();
     const createBody = {
       title: "E2E-REG-promotion",
-      dateTime: iso(t + 14 * 86400000),
+      ...E2E_MATCH_SCHEDULE,
       mode: "ALTERNATED",
       maxPlayers: 2,
       maxSubstitutes: 2,
-      registrationOpensAt: iso(t - 86400000),
-      registrationClosesAt: iso(t + 7 * 86400000),
     };
 
     const created = await request(app.getHttpServer())

@@ -9,7 +9,7 @@ import {
   Req,
   UseGuards,
 } from "@nestjs/common";
-import type { RegisterPlayerDto } from "./dto/register-player.dto";
+import { RegisterPlayerDto } from "./dto/register-player.dto";
 import { PlayerUserGuard } from "./player-user.guard";
 import type { RequestWithPlayer } from "./request-with-player";
 import { RegistrationsService } from "./registrations.service";
