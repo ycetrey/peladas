@@ -51,3 +51,12 @@ export class InvalidMatchCreationError extends DomainError {
     super(message);
   }
 }
+
+export class NoRegistrationSlotsError extends DomainError {
+  readonly code = "NoRegistrationSlotsError";
+  constructor(
+    message = "No slots available for titulars or substitutes on this match",
+  ) {
+    super(message);
+  }
+}

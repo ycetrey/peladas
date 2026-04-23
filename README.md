@@ -61,6 +61,20 @@ Erros de regra de negócio devolvem JSON `{ "error": { "code": "<NomeErro>", "me
 
 **Testes e2e da API** (`pnpm --filter @peladas/api run test:e2e`): requerem `DATABASE_URL` (Postgres). Para saltar na CI: `SKIP_E2E=1`.
 
+## API — Inscrições (fase 3)
+
+O jogador identifica-se com **`X-Player-User-Id`** (UUID de um `User` existente).
+
+**Inscrever** — `POST http://localhost:3001/matches/<matchId>/registrations` com JSON `{ "preferredPosition": "MIDFIELDER" }` (ou outro valor do enum `PlayerPosition`).
+
+**Cancelar a própria inscrição** — `DELETE http://localhost:3001/matches/<matchId>/registrations/me` (mesmo cabeçalho `X-Player-User-Id`).
+
+- Se cancelares um **titular** (`CONFIRMED`), o **primeiro reserva** (`SUBSTITUTE`, menor `queueOrder`) passa a `CONFIRMED` (transação atómica).
+- Sem inscrição ativa para esse par jogador+partida: resposta de erro de domínio `InvalidMatchStateError` (HTTP **400**), mensagem *No active registration for this match*.
+- Segunda inscrição ativa na mesma partida: `UserAlreadyRegisteredError` (**400**).
+- Partida fechada ou fora da janela: `RegistrationClosedError` ou `MatchNotOpenError`.
+- Sem vaga para titular nem reserva: `NoRegistrationSlotsError` (**400**).
+
 ## Monorepo
 
 - `apps/api` — NestJS + Prisma  

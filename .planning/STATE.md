@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Phase 3: executar /gsd-execute-phase 3 após revisão dos PLANs"
-last_updated: "2026-04-23T14:00:00.000Z"
-last_activity: "2026-04-23 — verify-work 2 (UAT + testes automáticos); discuss+plan phase 3"
+stopped_at: "Phase 4: planear /gsd-plan-phase ou executar após contexto"
+last_updated: "2026-04-22T18:00:00.000Z"
+last_activity: "2026-04-22 — execute-phase 3 (inscrições + e2e + README)"
 progress:
   total_phases: 6
-  completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
-  percent: 35
+  completed_phases: 3
+  total_plans: 9
+  completed_plans: 9
+  percent: 50
 ---
 
 # Project State
@@ -20,58 +20,59 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-04-22)
 
-**Core value:** Organizar uma pelada do “quem vai?” até os dois times prontos, com regras claras e erros previsíveis.  
-**Current focus:** Phase 3 — Inscrições (planos 03-01/03-02 prontos; executar com `/gsd-execute-phase 3`)
+**Core value:** Organizar uma pelada do "quem vai?" até os dois times prontos, com regras claras e erros previsíveis.  
+**Current focus:** Phase 4 — Geração de times A/B (roadmap; planos TBD)
 
 ## Current Position
 
-Phase: 2 of 6 (Partidas API) — implementação entregue  
-Plan: 3 of 3 in phase 2  
-Status: Verificar com UAT / uso local (`pnpm test`, `test:e2e` com Postgres)  
-Last activity: 2026-04-23 — execute-phase 2 concluído (3 SUMMARYs)
+Phase: 3 of 6 (Inscrições) — implementação entregue  
+Plan: 2 of 2 in phase 3  
+Status: Validar e2e com Postgres local (`SKIP_E2E=0`); próximo marco — fase 4  
+Last activity: 2026-04-22 — execute-phase 3 (SUMMARYs 03-01/03-02)
 
-Progress: [███░░░░░░░] 35%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 4
+- Total plans completed: 9
 - Average duration: —
-- Total execution time: 0 h
+- Total execution time: —
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| — | — | — | — |
+| 3 | 2 | — | — |
 
-**Recent Trend:** —
+**Recent trend:** Inscrições com fila e promoção no cancelamento.
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table. Stack locked: Docker-first, NestJS + 2× Next.js, Prisma only.
+- Cancelamento sem inscrição ativa: `InvalidMatchStateError` / HTTP 400, mensagem *No active registration for this match*.
+- Identidade do jogador na API: header `X-Player-User-Id` (UUID), guard espelhando organizador.
 
-### Pending Todos
+### Pending todos
 
-None yet.
+- Correr `pnpm` ou `npx jest --config jest-e2e.config.cjs` em `apps/api` com `DATABASE_URL` para validar e2e de inscrições.
 
-### Blockers/Concerns
+### Blockers / concerns
 
-- **Docker daemon** não disponível no ambiente do agente: `docker compose build` / `migrate deploy` não foram executados aqui — validar na tua máquina.
+- **Corepack / pnpm** no Windows pode falhar com erro de assinatura de chave; usar `npx nest build` / `npx jest` dentro de `apps/api` como workaround.
 
-## Deferred Items
+## Deferred items
 
-| Category | Item | Status | Deferred At |
+| Category | Item | Status | Deferred at |
 |----------|------|--------|-------------|
 | v2 | REG-TX-01, DRAW-01, POS-01, JOB-01 | Acknowledged | 2026-04-22 |
 
-## Session Continuity
+## Session continuity
 
 Last session: 2026-04-22  
-Stopped at: Phase 1 execute — aguardar validação Docker + UAT  
+Stopped at: Fase 3 fechada em código e documentação; avançar para fase 4  
 Resume file: None
 
-**Planned Phase:** 02 (Partidas) — após `/gsd-verify-work 1` ou confirmação manual
+**Planned phase:** 04 (Geração de times)

@@ -13,7 +13,7 @@ Entregar Peladas em camadas que liberam valor cedo: primeiro o **ambiente Docker
 
 - [x] **Phase 1: Fundação Docker, Prisma e API shell** — Compose sobe DB + três serviços; schema e migrations; usuário persistido; API roda em container
 - [x] **Phase 2: Partidas — criação, leitura e erros de negócio** — Criar/listar/detalhar partida com validações de janela; contrato de erros estável
-- [ ] **Phase 3: Inscrições, fila e cancelamento** — Inscrever, bloquear duplicata, cancelar com promoção de reserva
+- [x] **Phase 3: Inscrições, fila e cancelamento** — Inscrever, bloquear duplicata, cancelar com promoção de reserva
 - [ ] **Phase 4: Geração de times A/B** — Gerar times quando lista de titulares fecha; modos alternado e sorteio ao final
 - [ ] **Phase 5: App Next.js jogador** — Lista, inscrição/cancelamento e status na UI
 - [ ] **Phase 6: App Next.js admin** — Criar partida e acionar geração de times na UI
@@ -69,8 +69,8 @@ Plans:
 
 Plans:
 
-- [ ] 03-01: Regras de inscrição + `NoRegistrationSlotsError` + Jest (`03-01-PLAN.md`)
-- [ ] 03-02: HTTP inscrições/cancelamento + e2e + README (`03-02-PLAN.md`)
+- [x] 03-01: Regras de inscrição + `NoRegistrationSlotsError` + Jest (`03-01-PLAN.md`)
+- [x] 03-02: HTTP inscrições/cancelamento + e2e + README (`03-02-PLAN.md`)
 
 ### Phase 4: Geração de times A/B
 **Goal**: Quando todos os titulares estão confirmados, organizador gera dois times persistidos conforme modo da partida.
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Fundação Docker, Prisma e API shell | 4/4 | Complete (verify Docker locally) | 2026-04-22 |
 | 2. Partidas — criação, leitura e erros | 3/3 | Complete | 2026-04-23 |
-| 3. Inscrições, fila e cancelamento | 0/2 | Planned | - |
+| 3. Inscrições, fila e cancelamento | 2/2 | Complete | 2026-04-22 |
 | 4. Geração de times A/B | 0/TBD | Not started | - |
 | 5. App Next.js jogador | 0/TBD | Not started | - |
 | 6. App Next.js admin | 0/TBD | Not started | - |
