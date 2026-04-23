@@ -10,6 +10,7 @@ RUN pnpm install
 
 COPY next.config.ts tsconfig.json next-env.d.ts ./
 COPY app ./app
+COPY lib ./lib
 
 EXPOSE 3000
 

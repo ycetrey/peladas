@@ -57,9 +57,9 @@
 
 ### UI — Jogador (UIJ)
 
-- [ ] **UIJ-01**: No app **jogador**, usuário vê **lista** de partidas (via API-03)
-- [ ] **UIJ-02**: No app jogador, usuário **inscreve** e **cancela** inscrição em partida elegível (API-04, API-05)
-- [ ] **UIJ-03**: No app jogador, usuário vê seu **status** de inscrição (titular/reserva/cancelado) na partida
+- [x] **UIJ-01**: No app **jogador**, usuário vê **lista** de partidas (via API-03)
+- [x] **UIJ-02**: No app jogador, usuário **inscreve** e **cancela** inscrição em partida elegível (API-04, API-05)
+- [x] **UIJ-03**: No app jogador, usuário vê seu **status** de inscrição (titular/reserva/cancelado) na partida
 
 ### UI — Admin (UIA)
 
@@ -121,9 +121,9 @@ Deferred / follow-ups from domain advisory (`intel/context.md`).
 | TEAM-01 | Phase 4 | Implemented |
 | RULE-04 | Phase 4 | Implemented |
 | API-06 | Phase 4 | Implemented |
-| UIJ-01 | Phase 5 | Pending |
-| UIJ-02 | Phase 5 | Pending |
-| UIJ-03 | Phase 5 | Pending |
+| UIJ-01 | Phase 5 | Implemented |
+| UIJ-02 | Phase 5 | Implemented |
+| UIJ-03 | Phase 5 | Implemented |
 | UIA-01 | Phase 6 | Pending |
 | UIA-02 | Phase 6 | Pending |
 
@@ -135,4 +135,4 @@ Deferred / follow-ups from domain advisory (`intel/context.md`).
 
 ---
 *Requirements defined: 2026-04-22*  
-*Last updated: 2026-04-22 — Phase 4 TEAM / RULE-04 / API-06 marked Implemented*
+*Last updated: 2026-04-22 — Phase 5 UIJ-01/02/03 marked Implemented*

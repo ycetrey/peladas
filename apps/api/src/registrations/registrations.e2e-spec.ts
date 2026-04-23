@@ -146,4 +146,43 @@ describeE2e("Registrations (e2e)", () => {
     });
     expect(p1?.status).toBe(RegistrationStatus.CANCELED);
   });
+
+  it("GET registrations/me returns null then active registration", async () => {
+    const createBody = {
+      title: "E2E-REG-get-me",
+      ...E2E_MATCH_SCHEDULE,
+      mode: "ALTERNATED",
+      maxPlayers: 4,
+      maxSubstitutes: 2,
+    };
+
+    const created = await request(app.getHttpServer())
+      .post("/matches")
+      .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
+      .send(createBody)
+      .expect(201);
+
+    const matchId = created.body.match.id as string;
+
+    const empty = await request(app.getHttpServer())
+      .get(`/matches/${matchId}/registrations/me`)
+      .set("X-Player-User-Id", SEED_PLAYER_2_ID)
+      .expect(200);
+
+    expect(empty.body.registration).toBeNull();
+
+    await request(app.getHttpServer())
+      .post(`/matches/${matchId}/registrations`)
+      .set("X-Player-User-Id", SEED_PLAYER_2_ID)
+      .send({ preferredPosition: "GOALKEEPER" })
+      .expect(201);
+
+    const withReg = await request(app.getHttpServer())
+      .get(`/matches/${matchId}/registrations/me`)
+      .set("X-Player-User-Id", SEED_PLAYER_2_ID)
+      .expect(200);
+
+    expect(withReg.body.registration).toBeDefined();
+    expect(withReg.body.registration.status).toBe(RegistrationStatus.CONFIRMED);
+  });
 });

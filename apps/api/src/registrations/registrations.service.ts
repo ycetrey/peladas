@@ -73,6 +73,28 @@ export class RegistrationsService {
     return { registration };
   }
 
+  async findMine(
+    matchId: string,
+    userId: string,
+  ): Promise<{ registration: Registration | null }> {
+    const match = await this.prisma.match.findUnique({ where: { id: matchId } });
+    if (!match) {
+      throw new MatchNotFoundError();
+    }
+
+    const registration = await this.prisma.registration.findFirst({
+      where: {
+        matchId,
+        userId,
+        status: {
+          in: [RegistrationStatus.CONFIRMED, RegistrationStatus.SUBSTITUTE],
+        },
+      },
+    });
+
+    return { registration };
+  }
+
   async cancelMine(
     matchId: string,
     userId: string,

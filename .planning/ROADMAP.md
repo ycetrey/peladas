@@ -100,8 +100,8 @@ Plans:
 
 Plans:
 
-- [ ] 05-01: Lista + detalhe leitura + CORS + cliente HTTP (`05-01-PLAN.md`)
-- [ ] 05-02: GET `registrations/me` + inscrever/cancelar na UI + estado (`05-02-PLAN.md`)
+- [x] 05-01: Lista + detalhe leitura + CORS + cliente HTTP (`05-01-PLAN.md`)
+- [x] 05-02: GET `registrations/me` + inscrever/cancelar na UI + estado (`05-02-PLAN.md`)
 **UI hint**: yes
 
 ### Phase 6: App Next.js admin
@@ -126,5 +126,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Partidas — criação, leitura e erros | 3/3 | Complete | 2026-04-23 |
 | 3. Inscrições, fila e cancelamento | 2/2 | Complete | 2026-04-22 |
 | 4. Geração de times A/B | 2/2 | Complete | 2026-04-22 |
-| 5. App Next.js jogador | 0/2 | Planned | - |
+| 5. App Next.js jogador | 2/2 | Complete | 2026-04-22 |
 | 6. App Next.js admin | 0/TBD | Not started | - |

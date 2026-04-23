@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -17,6 +18,16 @@ import { RegistrationsService } from "./registrations.service";
 @Controller("matches/:matchId/registrations")
 export class RegistrationsController {
   constructor(private readonly registrations: RegistrationsService) {}
+
+  @Get("me")
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(PlayerUserGuard)
+  getMine(
+    @Param("matchId") matchId: string,
+    @Req() req: RequestWithPlayer,
+  ): ReturnType<RegistrationsService["findMine"]> {
+    return this.registrations.findMine(matchId, req.playerUser!.id);
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

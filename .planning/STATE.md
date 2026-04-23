@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_execute
-stopped_at: "Phase 5: executar /gsd-execute-phase 5"
-last_updated: "2026-04-23T12:00:00.000Z"
-last_activity: "2026-04-23 — /gsd-plan-phase 5 --research (RESEARCH.md refresh + CONTEXT)"
+status: ready_to_plan
+stopped_at: "Phase 6: App Next.js admin — planear / executar"
+last_updated: "2026-04-22T18:00:00.000Z"
+last_activity: "2026-04-22 — /gsd-execute-phase 5 (UI jogador + GET registrations/me)"
 progress:
   total_phases: 6
-  completed_phases: 4
-  total_plans: 13
-  completed_plans: 11
-  percent: 67
+  completed_phases: 5
+  total_plans: 15
+  completed_plans: 13
+  percent: 83
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-22)
 
 **Core value:** Organizar uma pelada do "quem vai?" até os dois times prontos, com regras claras e erros previsíveis.  
-**Current focus:** Phase 5 — App Next.js jogador (planos 05-01 / 05-02 prontos)
+**Current focus:** Phase 6 — App Next.js admin (a planear)
 
 ## Current Position
 
-Phase: 5 of 6 (App jogador) — **planeado**, aguarda execução  
-Plan: 0 of 2 in phase 5 (executar)  
-Status: `/gsd-execute-phase 5`  
-Last activity: 2026-04-23 — plan-phase 5 (UI-SPEC + PATTERNS + VALIDATION + PLANs)
+Phase: 6 of 6 (App admin) — **não iniciada**  
+Plan: Fase 5 concluída (05-01 + 05-02)  
+Status: Pronto para planear/executar fase 6  
+Last activity: 2026-04-22 — execute-phase 5 (web-jogador + API GET me)
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -49,7 +49,7 @@ Progress: [███████░░░] 67%
 
 ### Pending todos
 
-- Executar ondas 05-01 → 05-02.
+- Planear e executar fase 6 (UI admin).
 
 ### Blockers / concerns
 
@@ -57,8 +57,8 @@ Progress: [███████░░░] 67%
 
 ## Session continuity
 
-Last session: 2026-04-23  
-Stopped at: Fase 5 planeado  
+Last session: 2026-04-22  
+Stopped at: Fase 5 completa  
 Resume file: None
 
-**Planned phase:** 05 — executar com `/gsd-execute-phase 5`
+**Next phase:** 06 — App admin (`/gsd-plan-phase 6` ou equivalente)

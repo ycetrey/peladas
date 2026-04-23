@@ -25,6 +25,7 @@ services:
       DATABASE_URL: postgresql://peladas:peladas@db:5432/peladas?schema=public
       PORT: "3001"
       NODE_ENV: development
+      WEB_JOGADOR_ORIGIN: "${WEB_JOGADOR_ORIGIN:-http://localhost:3002}"
     volumes:
       - ./apps/api:/app
       - api_node_modules:/app/node_modules
@@ -42,6 +43,7 @@ services:
       dockerfile: Dockerfile
     environment:
       NODE_ENV: development
+      NEXT_PUBLIC_API_BASE_URL: "${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3001}"
     volumes:
       - ./apps/web-jogador:/app
       - web_jogador_node_modules:/app/node_modules

@@ -69,6 +69,14 @@ O jogador identifica-se com **`X-Player-User-Id`** (UUID de um `User` existente)
 
 **Cancelar a própria inscrição** — `DELETE http://localhost:3001/matches/<matchId>/registrations/me` (mesmo cabeçalho `X-Player-User-Id`).
 
+**Estado da própria inscrição** — `GET http://localhost:3001/matches/<matchId>/registrations/me` com `X-Player-User-Id`: resposta `200` e `{ "registration": null }` se não houver inscrição ativa, ou `{ "registration": { ... } }` com `status`, `queueOrder`, `preferredPosition`, etc.
+
+### CORS (app jogador no browser)
+
+A API aceita pedidos do origin do **web-jogador** (por defeito `http://localhost:3002`). Variável opcional na **API**: `WEB_JOGADOR_ORIGIN` — lista separada por vírgulas se precisares de mais origens (ex.: `http://localhost:3002,https://app.example.com`).
+
+No serviço **web-jogador** do Compose, `NEXT_PUBLIC_API_BASE_URL` aponta por defeito para `http://localhost:3001` para o **browser no host** falar com a API exposta na máquina.
+
 - Se cancelares um **titular** (`CONFIRMED`), o **primeiro reserva** (`SUBSTITUTE`, menor `queueOrder`) passa a `CONFIRMED` (transação atómica).
 - Sem inscrição ativa para esse par jogador+partida: resposta de erro de domínio `InvalidMatchStateError` (HTTP **400**), mensagem *No active registration for this match*.
 - Segunda inscrição ativa na mesma partida: `UserAlreadyRegisteredError` (**400**).
