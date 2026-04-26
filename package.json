@@ -4,6 +4,14 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "docker compose up --build",
-    "compose:config": "docker compose config"
+    "compose:config": "docker compose config",
+    "db:migrate": "node apps/api/scripts/run-prisma.cjs migrate deploy",
+    "db:seed": "node apps/api/scripts/run-prisma.cjs db seed",
+    "build:frontends": "pnpm --filter @peladas/web-jogador build && pnpm --filter @peladas/web-admin build",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
   }
 }

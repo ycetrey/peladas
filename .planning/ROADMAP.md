@@ -144,8 +144,8 @@ Plans:
 **Goal:** Pacote `@peladas/fixtures` espelhando a API; Tailwind + shadcn nos dois Next.js; Storybook + Playwright + CI mínima para builds e UI estática.
 **Requirements**: TBD
 **Depends on:** Phase 7
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 08-01: Workspace fixtures + Tailwind/shadcn em web-jogador e web-admin (`08-01-PLAN.md`)
-- [ ] 08-02: Storybook, Playwright smoke, workflow CI (`08-02-PLAN.md`)
+- [x] 08-01: Workspace fixtures + Tailwind/shadcn em web-jogador e web-admin (`08-01-PLAN.md`)
+- [x] 08-02: Storybook, Playwright smoke, workflow CI (`08-02-PLAN.md`)

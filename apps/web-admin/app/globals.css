@@ -235,19 +235,6 @@ textarea:focus {
   border-color: #fde68a;
 }
 
-.match-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.match-group-title {
-  margin: 0;
-  font-family: Poppins, Inter, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
 .match-list-item {
   display: flex;
   flex-direction: column;

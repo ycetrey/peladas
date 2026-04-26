@@ -1,0 +1,55 @@
+name: UI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-frontends:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Next.js apps
+        run: |
+          pnpm --filter @peladas/web-jogador build
+          pnpm --filter @peladas/web-admin build
+
+      - name: Build Storybook (jogador)
+        run: pnpm --filter @peladas/web-jogador run build-storybook
+
+      - name: Build Storybook (admin)
+        run: pnpm --filter @peladas/web-admin run build-storybook
+
+  # Activa quando tiveres servidor estável na CI (ex.: compose + seed).
+  e2e:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install chromium --with-deps
+      - run: PLAYWRIGHT_BASE_URL=http://localhost:3002 pnpm exec playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:3002
