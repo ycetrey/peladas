@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_plan
-stopped_at: "Phase 6: App Next.js admin — planear / executar"
-last_updated: "2026-04-22T18:00:00.000Z"
-last_activity: "2026-04-22 — /gsd-execute-phase 5 (UI jogador + GET registrations/me)"
+status: Pronto para planear/executar fase 6
+stopped_at: Phase 08 context gathered
+last_updated: "2026-04-26T19:57:45.731Z"
+last_activity: 2026-04-22 — execute-phase 5 (web-jogador + API GET me)
 progress:
-  total_phases: 6
+  total_phases: 8
   completed_phases: 5
-  total_plans: 15
+  total_plans: 14
   completed_plans: 13
-  percent: 83
+  percent: 93
 ---
 
 # Project State
@@ -57,8 +57,8 @@ Progress: [████████░░] 83%
 
 ## Session continuity
 
-Last session: 2026-04-22  
-Stopped at: Fase 5 completa  
-Resume file: None
+Last session: 2026-04-26T19:57:45.727Z
+Stopped at: Phase 08 context gathered
+Resume file: .planning/phases/08-base-de-dados-mock-e-depend-ncias-de-ui/08-CONTEXT.md
 
 **Next phase:** 06 — App admin (`/gsd-plan-phase 6` ou equivalente)
