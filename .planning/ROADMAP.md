@@ -149,3 +149,25 @@ Plans:
 Plans:
 - [x] 08-01: Workspace fixtures + Tailwind/shadcn em web-jogador e web-admin (`08-01-PLAN.md`)
 - [x] 08-02: Storybook, Playwright smoke, workflow CI (`08-02-PLAN.md`)
+
+### Phase 9: CRUD admin — campos e grupos
+
+**Goal:** Alinhar as telas **Campos** e **Grupos** no `web-admin` à mesma lógica de navegação e operações do fluxo de **partidas**: listagem em cartões, rotas dedicadas de criação e edição, leitura por id, atualização e remoção quando a API permitir; expor na API `GET/PATCH/DELETE` para venue e group com regras de dono e conflito quando existirem partidas associadas.
+
+**Depends on:** Phase 8
+
+**Requirements:** TBD → alinhar a `REQUIREMENTS.md` com UIA-/API- conforme forem mapeados
+
+**Success Criteria** (what must be TRUE):
+
+1. Admin autenticado obtém **detalhe** de um campo ou grupo por id e **atualiza** nome (e campos editáveis do venue) via API estável
+2. **Apagar** campo ou grupo sem partidas associadas remove o registo; com partidas associadas a API devolve erro de negócio **nomeado** (409 ou equivalente documentado)
+3. UI admin: **`/venues`** lista com links para **`/venues/nova`** e **`/venues/[id]/editar`**; **`/groups`** idem para **`/groups/nova`** e **`/groups/[id]/editar`**, com padrão visual **panel-card** / barra de ações semelhante a partidas (`Voltar`, `Salvar`, `Deletar` onde aplicável)
+4. Cliente Next (`lib/api`) e proxy **`/api/backend`** continuam a funcionar para os novos verbos
+
+**Plans:** 2/2 plans complete
+
+Plans:
+
+- [x] 09-01: API venues/groups — GET :id, PATCH, DELETE + erros + testes (`09-01-PLAN.md`)
+- [x] 09-02: Admin UI — rotas e CRUD espelhando partidas (`09-02-PLAN.md`)
