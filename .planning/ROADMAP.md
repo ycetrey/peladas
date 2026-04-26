@@ -128,3 +128,24 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 4. Geração de times A/B | 2/2 | Complete | 2026-04-22 |
 | 5. App Next.js jogador | 2/2 | Complete | 2026-04-22 |
 | 6. App Next.js admin | 0/TBD | Not started | - |
+
+### Phase 7: leitura e organização dos dados
+
+**Goal:** Evoluir a leitura dos dados de partidas para suportar sinalização explícita de ausência ("Não irei") antes da inscrição, mantendo o fluxo de desinscrição após inscrito.
+**Requirements**: TBD
+**Depends on:** Phase 6
+**Plans:** 1 plan
+
+Plans:
+- [ ] 07-01: RSVP de ausência ("Não irei") + desinscrição explícita + agregados de presença (`07-01-PLAN.md`)
+
+### Phase 8: base de dados mock e dependências de UI
+
+**Goal:** Pacote `@peladas/fixtures` espelhando a API; Tailwind + shadcn nos dois Next.js; Storybook + Playwright + CI mínima para builds e UI estática.
+**Requirements**: TBD
+**Depends on:** Phase 7
+**Plans:** 2 plans
+
+Plans:
+- [ ] 08-01: Workspace fixtures + Tailwind/shadcn em web-jogador e web-admin (`08-01-PLAN.md`)
+- [ ] 08-02: Storybook, Playwright smoke, workflow CI (`08-02-PLAN.md`)
