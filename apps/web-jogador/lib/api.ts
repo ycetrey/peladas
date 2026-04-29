@@ -16,12 +16,22 @@ export function getApiBaseUrl(): string {
   return "http://localhost:3001";
 }
 
+function backendPath(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `/api/backend${p}`;
+}
+
 async function apiFetch<T>(
   path: string,
   init?: RequestInit & { jsonBody?: unknown },
 ): Promise<T> {
-  const base = getApiBaseUrl();
-  const url = path.startsWith("http") ? path : `${base}${path.startsWith("/") ? "" : "/"}${path}`;
+  const isBackend = path.startsWith("/api/backend");
+  const base = isBackend ? "" : getApiBaseUrl();
+  const url = isBackend
+    ? path
+    : path.startsWith("http")
+      ? path
+      : `${base}${path.startsWith("/") ? "" : "/"}${path}`;
   const headers = new Headers(init?.headers);
   const method = (init?.method ?? "GET").toUpperCase();
   if (
@@ -35,6 +45,7 @@ async function apiFetch<T>(
     ...rest,
     method,
     headers,
+    credentials: isBackend ? "include" : (rest as RequestInit).credentials ?? "omit",
     body:
       jsonBody !== undefined ? JSON.stringify(jsonBody) : (rest as RequestInit).body,
   });
@@ -62,46 +73,56 @@ async function apiFetch<T>(
 }
 
 export async function listMatches(): Promise<Match[]> {
-  const data = await apiFetch<MatchListResponse>("/matches");
+  const data = await apiFetch<MatchListResponse>(backendPath("/matches"), {
+    credentials: "include",
+  });
   return data.matches;
 }
 
 export async function getMatch(id: string): Promise<Match> {
-  const data = await apiFetch<MatchDetailResponse>(`/matches/${id}`);
+  const data = await apiFetch<MatchDetailResponse>(backendPath(`/matches/${id}`), {
+    credentials: "include",
+  });
   return data.match;
 }
 
-export async function getMyRegistration(
-  matchId: string,
-  playerUserId: string,
-): Promise<Registration | null> {
+export async function getMyRegistration(matchId: string): Promise<Registration | null> {
   const data = await apiFetch<MyRegistrationResponse>(
-    `/matches/${matchId}/registrations/me`,
-    {
-      headers: { "X-Player-User-Id": playerUserId },
-    },
+    backendPath(`/matches/${matchId}/registrations/me`),
   );
   return data.registration;
 }
 
 export async function registerForMatch(
   matchId: string,
-  playerUserId: string,
   preferredPosition: PlayerPosition,
 ): Promise<void> {
-  await apiFetch<unknown>(`/matches/${matchId}/registrations`, {
+  await apiFetch<unknown>(backendPath(`/matches/${matchId}/registrations`), {
     method: "POST",
-    headers: { "X-Player-User-Id": playerUserId },
     jsonBody: { preferredPosition },
   });
 }
 
-export async function cancelMyRegistration(
-  matchId: string,
-  playerUserId: string,
-): Promise<void> {
-  await apiFetch<unknown>(`/matches/${matchId}/registrations/me`, {
+export async function cancelMyRegistration(matchId: string): Promise<void> {
+  await apiFetch<unknown>(backendPath(`/matches/${matchId}/registrations/me`), {
     method: "DELETE",
-    headers: { "X-Player-User-Id": playerUserId },
   });
+}
+
+export async function markMyAbsence(matchId: string): Promise<void> {
+  await apiFetch<unknown>(
+    backendPath(`/matches/${matchId}/registrations/me/absence`),
+    {
+      method: "POST",
+    },
+  );
+}
+
+export async function clearMyAbsence(matchId: string): Promise<void> {
+  await apiFetch<unknown>(
+    backendPath(`/matches/${matchId}/registrations/me/absence`),
+    {
+      method: "DELETE",
+    },
+  );
 }

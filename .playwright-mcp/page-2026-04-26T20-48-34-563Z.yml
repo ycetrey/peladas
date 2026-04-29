@@ -1,0 +1,140 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e24] [cursor=pointer]:
+    - img [ref=e25]
+  - alert [ref=e18]
+  - banner "Peladas seed — partida pública alternada" [ref=e28]:
+    - heading "Peladas — Admin" [level=1] [ref=e29]:
+      - link "Peladas — Admin" [ref=e30] [cursor=pointer]:
+        - /url: /
+    - navigation [ref=e31]:
+      - link "Painel" [ref=e32] [cursor=pointer]:
+        - /url: /
+      - link "Nova Partida" [ref=e33] [cursor=pointer]:
+        - /url: /partidas/nova
+      - link "Campos" [ref=e34] [cursor=pointer]:
+        - /url: /venues
+      - link "Grupos" [ref=e35] [cursor=pointer]:
+        - /url: /groups
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - text: Seed Admin
+        - text: admin@peladas.local
+      - button "Sair" [ref=e38] [cursor=pointer]
+  - generic [ref=e40]:
+    - complementary [ref=e41]:
+      - heading "Filtros" [level=2] [ref=e42]
+      - generic [ref=e43]:
+        - generic [ref=e44]: Campos
+        - combobox "Campos" [ref=e45]:
+          - option "Todos os campos" [selected]
+          - option "Bate bola"
+          - option "Complexo Atlântico"
+          - option "Parque Desportivo Central"
+      - generic [ref=e46]:
+        - generic [ref=e47]: Grupos
+        - combobox "Grupos" [ref=e48]:
+          - option "Todos" [selected]
+          - option "Públicas"
+      - generic [ref=e49]:
+        - generic [ref=e50]: Status
+        - combobox "Status" [ref=e51]:
+          - option "Todos" [selected]
+          - option "OPEN"
+          - option "CLOSED"
+          - option "FINISHED"
+      - button "Limpar filtros" [ref=e52] [cursor=pointer]
+    - main [ref=e53]:
+      - generic [ref=e54]:
+        - heading "Dashboard de Partidas" [level=1] [ref=e55]
+        - link "Nova Partida" [ref=e56] [cursor=pointer]:
+          - /url: /partidas/nova
+      - generic [ref=e57]:
+        - heading "Bate bola · Grupo" [level=2] [ref=e58]
+        - link [ref=e59] [cursor=pointer]:
+          - /url: /partidas/62c77e7c-4865-49e9-bf11-0475661f99ae/editar
+          - article [ref=e60]:
+            - generic [ref=e61]:
+              - strong [ref=e62]: Futebol 20/04/26 - 20h Bate-bola 23oC 0.0mm
+              - generic [ref=e63]: OPEN
+            - generic [ref=e64]: Bate bola · 24/04/2026, 20:00:00 · Grupo
+            - generic [ref=e65]:
+              - generic [ref=e66]: "Confirmados: 0"
+              - generic [ref=e67]: "Ausentes: 0"
+      - generic [ref=e68]:
+        - heading "Parque Desportivo Central" [level=2] [ref=e69]
+        - link [ref=e70] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d5/editar
+          - article [ref=e71]:
+            - generic [ref=e72]:
+              - strong [ref=e73]: ⚠ Inscrições fecham em menos de 1h (teste)
+              - generic [ref=e74]: OPEN
+            - generic [ref=e75]: Parque Desportivo Central · 28/04/2026, 15:58:28 · Pública
+            - generic [ref=e76]:
+              - generic [ref=e77]: "Confirmados: 2"
+              - generic [ref=e78]: "Ausentes: 1"
+        - link [ref=e79] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d1/editar
+          - article [ref=e80]:
+            - generic [ref=e81]:
+              - strong [ref=e82]: Pelada terça — modo alternado
+              - generic [ref=e83]: OPEN
+            - generic [ref=e84]: Parque Desportivo Central · 01/05/2026, 15:58:28 · Pública
+            - generic [ref=e85]:
+              - generic [ref=e86]: "Confirmados: 5"
+              - generic [ref=e87]: "Ausentes: 0"
+        - link [ref=e88] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d7/editar
+          - article [ref=e89]:
+            - generic [ref=e90]:
+              - strong [ref=e91]: Inscrições já fechadas (histórico)
+              - generic [ref=e92]: OPEN
+            - generic [ref=e93]: Parque Desportivo Central · 10/05/2026, 15:58:28 · Pública
+            - generic [ref=e94]:
+              - generic [ref=e95]: "Confirmados: 3"
+              - generic [ref=e96]: "Ausentes: 0"
+      - generic [ref=e97]:
+        - heading "Parque Desportivo Central · Grupo" [level=2] [ref=e98]
+        - link [ref=e99] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d3/editar
+          - article [ref=e100]:
+            - generic [ref=e101]:
+              - strong [ref=e102]: Quarta à noite (só grupo Amigos)
+              - generic [ref=e103]: OPEN
+            - generic [ref=e104]: Parque Desportivo Central · 29/04/2026, 15:58:28 · Grupo
+            - generic [ref=e105]:
+              - generic [ref=e106]: "Confirmados: 4"
+              - generic [ref=e107]: "Ausentes: 0"
+      - generic [ref=e108]:
+        - heading "Complexo Atlântico" [level=2] [ref=e109]
+        - link [ref=e110] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d6/editar
+          - article [ref=e111]:
+            - generic [ref=e112]:
+              - strong [ref=e113]: Titulares lotados — testar fila de reserva
+              - generic [ref=e114]: OPEN
+            - generic [ref=e115]: Complexo Atlântico · 30/04/2026, 15:58:28 · Pública
+            - generic [ref=e116]:
+              - generic [ref=e117]: "Confirmados: 6"
+              - generic [ref=e118]: "Ausentes: 0"
+        - link [ref=e119] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d2/editar
+          - article [ref=e120]:
+            - generic [ref=e121]:
+              - strong [ref=e122]: Pelada quinta — sorteio no final
+              - generic [ref=e123]: OPEN
+            - generic [ref=e124]: Complexo Atlântico · 03/05/2026, 15:58:28 · Pública
+            - generic [ref=e125]:
+              - generic [ref=e126]: "Confirmados: 3"
+              - generic [ref=e127]: "Ausentes: 0"
+      - generic [ref=e128]:
+        - heading "Complexo Atlântico · Grupo" [level=2] [ref=e129]
+        - link [ref=e130] [cursor=pointer]:
+          - /url: /partidas/00000000-0000-4000-8000-0000000000d4/editar
+          - article [ref=e131]:
+            - generic [ref=e132]:
+              - strong [ref=e133]: ACME — pelada interna
+              - generic [ref=e134]: OPEN
+            - generic [ref=e135]: Complexo Atlântico · 06/05/2026, 15:58:28 · Grupo
+            - generic [ref=e136]:
+              - generic [ref=e137]: "Confirmados: 2"
+              - generic [ref=e138]: "Ausentes: 0"

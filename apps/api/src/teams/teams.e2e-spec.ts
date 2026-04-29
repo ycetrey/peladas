@@ -2,16 +2,23 @@ import "reflect-metadata";
 import { ValidationPipe } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import request from "supertest";
-import { MatchMode, PlayerPosition, TeamName } from "@prisma/client";
+import { MatchMode, MatchVisibility, PlayerPosition, TeamName } from "@prisma/client";
 import { AppModule } from "../app.module";
 import { DomainExceptionFilter } from "../common/filters/domain-exception.filter";
 import { PrismaService } from "../prisma/prisma.service";
+import { loginBearer, upsertE2eUser } from "../../test/e2e-auth";
+import { createVenueForE2e } from "../../test/e2e-default-venue";
 
-const SEED_ORGANIZER_ID = "00000000-0000-4000-8000-000000000001";
-const P2 = "00000000-0000-4000-8000-000000000002";
-const P3 = "00000000-0000-4000-8000-000000000003";
-const P4 = "00000000-0000-4000-8000-000000000004";
-const P5 = "00000000-0000-4000-8000-000000000005";
+const ORG_ID = "00000000-0000-4000-8000-000000000030";
+const ORG_EMAIL = "e2e-teams-org@local.test";
+const P2 = "00000000-0000-4000-8000-000000000031";
+const P2_EMAIL = "e2e-teams-p2@local.test";
+const P3 = "00000000-0000-4000-8000-000000000032";
+const P3_EMAIL = "e2e-teams-p3@local.test";
+const P4 = "00000000-0000-4000-8000-000000000033";
+const P4_EMAIL = "e2e-teams-p4@local.test";
+const P5 = "00000000-0000-4000-8000-000000000034";
+const P5_EMAIL = "e2e-teams-p5@local.test";
 
 const describeE2e =
   process.env.DATABASE_URL && process.env.SKIP_E2E !== "1"
@@ -28,6 +35,12 @@ const E2E_MATCH_SCHEDULE = {
 describeE2e("Teams generate (e2e)", () => {
   let app: import("@nestjs/common").INestApplication;
   let prisma: PrismaService;
+  let orgAuth: string;
+  let p2Auth: string;
+  let p3Auth: string;
+  let p4Auth: string;
+  let p5Auth: string;
+  let venueId: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -46,24 +59,35 @@ describeE2e("Teams generate (e2e)", () => {
     await app.init();
     prisma = app.get(PrismaService);
 
+    await upsertE2eUser(prisma, {
+      id: ORG_ID,
+      email: ORG_EMAIL,
+      name: "E2E Org",
+      isAdmin: true,
+      positions: [PlayerPosition.ANY],
+    });
     for (const u of [
-      { id: SEED_ORGANIZER_ID, name: "E2E Org", pos: PlayerPosition.ANY },
-      { id: P2, name: "E2E T2", pos: PlayerPosition.FORWARD },
-      { id: P3, name: "E2E T3", pos: PlayerPosition.MIDFIELDER },
-      { id: P4, name: "E2E T4", pos: PlayerPosition.DEFENDER },
-      { id: P5, name: "E2E T5", pos: PlayerPosition.GOALKEEPER },
+      { id: P2, email: P2_EMAIL, name: "E2E T2", pos: PlayerPosition.FORWARD },
+      { id: P3, email: P3_EMAIL, name: "E2E T3", pos: PlayerPosition.MIDFIELDER },
+      { id: P4, email: P4_EMAIL, name: "E2E T4", pos: PlayerPosition.DEFENDER },
+      { id: P5, email: P5_EMAIL, name: "E2E T5", pos: PlayerPosition.GOALKEEPER },
     ]) {
-      await prisma.user.upsert({
-        where: { id: u.id },
-        update: {},
-        create: {
-          id: u.id,
-          name: u.name,
-          preferredPositions: [u.pos],
-          isAdmin: false,
-        },
+      await upsertE2eUser(prisma, {
+        id: u.id,
+        email: u.email,
+        name: u.name,
+        isAdmin: false,
+        positions: [u.pos],
       });
     }
+    venueId = await createVenueForE2e(prisma, ORG_ID);
+
+    const srv = app.getHttpServer();
+    orgAuth = await loginBearer(srv, ORG_EMAIL);
+    p2Auth = await loginBearer(srv, P2_EMAIL);
+    p3Auth = await loginBearer(srv, P3_EMAIL);
+    p4Auth = await loginBearer(srv, P4_EMAIL);
+    p5Auth = await loginBearer(srv, P5_EMAIL);
   });
 
   afterAll(async () => {
@@ -84,13 +108,15 @@ describeE2e("Teams generate (e2e)", () => {
     const t = Date.now();
     const res = await request(app.getHttpServer())
       .post("/matches")
-      .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
+      .set("Authorization", orgAuth)
       .send({
         title: `E2E-TEAMS-${t}-${mode}`,
         ...E2E_MATCH_SCHEDULE,
         mode,
         maxPlayers,
         maxSubstitutes: 2,
+        venueId,
+        visibility: MatchVisibility.PUBLIC,
       })
       .expect(201);
     return res.body.match.id as string;
@@ -98,18 +124,18 @@ describeE2e("Teams generate (e2e)", () => {
 
   it("ALTERNATED: generates A/B from full titular list; rejects second generate", async () => {
     const matchId = await createOpenMatch(MatchMode.ALTERNATED, 4);
-    const players = [P2, P3, P4, P5];
-    for (const pid of players) {
+    const auths = [p2Auth, p3Auth, p4Auth, p5Auth];
+    for (let i = 0; i < auths.length; i++) {
       await request(app.getHttpServer())
         .post(`/matches/${matchId}/registrations`)
-        .set("X-Player-User-Id", pid)
+        .set("Authorization", auths[i]!)
         .send({ preferredPosition: "MIDFIELDER" })
         .expect(201);
     }
 
     const gen = await request(app.getHttpServer())
       .post(`/matches/${matchId}/teams/generate`)
-      .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
+      .set("Authorization", orgAuth)
       .expect(201);
 
     expect(gen.body.teams).toHaveLength(2);
@@ -129,7 +155,7 @@ describeE2e("Teams generate (e2e)", () => {
 
     await request(app.getHttpServer())
       .post(`/matches/${matchId}/teams/generate`)
-      .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
+      .set("Authorization", orgAuth)
       .expect(400)
       .expect((res) => {
         expect(res.body.error.code).toBe("TeamsAlreadyGeneratedError");
@@ -138,17 +164,17 @@ describeE2e("Teams generate (e2e)", () => {
 
   it("rejects generate when confirmed count ≠ maxPlayers", async () => {
     const matchId = await createOpenMatch(MatchMode.ALTERNATED, 4);
-    for (const pid of [P2, P3]) {
+    for (const a of [p2Auth, p3Auth]) {
       await request(app.getHttpServer())
         .post(`/matches/${matchId}/registrations`)
-        .set("X-Player-User-Id", pid)
+        .set("Authorization", a)
         .send({ preferredPosition: "FORWARD" })
         .expect(201);
     }
 
     await request(app.getHttpServer())
       .post(`/matches/${matchId}/teams/generate`)
-      .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
+      .set("Authorization", orgAuth)
       .expect(400)
       .expect((res) => {
         expect(res.body.error.code).toBe("WrongConfirmedCountForTeamsError");
@@ -157,17 +183,17 @@ describeE2e("Teams generate (e2e)", () => {
 
   it("DRAW_AT_END: produces two balanced teams", async () => {
     const matchId = await createOpenMatch(MatchMode.DRAW_AT_END, 4);
-    for (const pid of [P2, P3, P4, P5]) {
+    for (const a of [p2Auth, p3Auth, p4Auth, p5Auth]) {
       await request(app.getHttpServer())
         .post(`/matches/${matchId}/registrations`)
-        .set("X-Player-User-Id", pid)
+        .set("Authorization", a)
         .send({ preferredPosition: "DEFENDER" })
         .expect(201);
     }
 
     await request(app.getHttpServer())
       .post(`/matches/${matchId}/teams/generate`)
-      .set("X-Organizer-User-Id", SEED_ORGANIZER_ID)
+      .set("Authorization", orgAuth)
       .expect(201);
 
     const dbTeams = await prisma.team.findMany({

@@ -42,12 +42,12 @@ export class MatchRulesService {
     const { registrationOpensAt, registrationClosesAt, dateTime } = input;
     if (!(registrationOpensAt < registrationClosesAt)) {
       throw new InvalidMatchCreationError(
-        "registrationOpensAt must be before registrationClosesAt",
+        "A abertura das inscrições tem de ser anterior ao fecho (registrationOpensAt < registrationClosesAt).",
       );
     }
     if (!(registrationClosesAt < dateTime)) {
       throw new InvalidMatchCreationError(
-        "registrationClosesAt must be before dateTime",
+        "O fecho das inscrições tem de ser anterior à data/hora da partida (registrationClosesAt < dateTime). Verifica também o ano nos campos de data.",
       );
     }
 

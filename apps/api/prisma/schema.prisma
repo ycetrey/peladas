@@ -20,9 +20,15 @@ enum MatchStatus {
   CANCELED
 }
 
+enum MatchVisibility {
+  PUBLIC
+  GROUP
+}
+
 enum RegistrationStatus {
   CONFIRMED
   SUBSTITUTE
+  ABSENT
   CANCELED
 }
 
@@ -41,30 +47,83 @@ enum TeamName {
 
 model User {
   id                 String           @id @default(uuid()) @db.Uuid
+  email              String           @unique
+  passwordHash       String
   name               String
   preferredPositions PlayerPosition[]
   isAdmin            Boolean          @default(false)
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 
-  registrations Registration[]
-  teamPlayers     TeamPlayer[]
+  registrations   Registration[]
+  teamPlayers       TeamPlayer[]
+  groupMembers      GroupMember[]
+  venuesCreated     Venue[]          @relation("VenueCreatedBy")
+  groupsCreated     Group[]          @relation("GroupCreatedBy")
+}
+
+model Venue {
+  id               String   @id @default(uuid()) @db.Uuid
+  name             String
+  locality         String?
+  googlePlaceId    String?
+  /** Dono do catálogo; preenchido pelo seed após existirem utilizadores. */
+  createdByUserId  String?  @db.Uuid
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  createdBy User?   @relation("VenueCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  matches   Match[]
+
+  @@index([createdByUserId])
+}
+
+model Group {
+  id              String   @id @default(uuid()) @db.Uuid
+  name            String
+  createdByUserId String?  @db.Uuid
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  createdBy User?         @relation("GroupCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  members   GroupMember[]
+  matches   Match[]
+
+  @@index([createdByUserId])
+}
+
+model GroupMember {
+  id        String   @id @default(uuid()) @db.Uuid
+  groupId   String   @db.Uuid
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([userId])
 }
 
 model Match {
-  id                   String      @id @default(uuid()) @db.Uuid
+  id                   String            @id @default(uuid()) @db.Uuid
   title                String
   dateTime             DateTime
   mode                 MatchMode
-  status               MatchStatus @default(DRAFT)
+  status               MatchStatus       @default(DRAFT)
   maxPlayers           Int
   maxSubstitutes       Int
   registrationOpensAt  DateTime
   registrationClosesAt DateTime
   recurringRule        Json?
-  createdAt            DateTime    @default(now())
-  updatedAt            DateTime    @updatedAt
+  venueId              String            @db.Uuid
+  visibility           MatchVisibility   @default(PUBLIC)
+  groupId              String?           @db.Uuid
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
 
+  venue         Venue          @relation(fields: [venueId], references: [id], onDelete: Restrict)
+  group         Group?         @relation(fields: [groupId], references: [id], onDelete: SetNull)
   registrations Registration[]
   teams         Team[]
 }

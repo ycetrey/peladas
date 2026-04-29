@@ -1,0 +1,18 @@
+- main [ref=e4]:
+  - heading "Admin — Peladas" [level=1] [ref=e5]
+  - paragraph [ref=e6]:
+    - text: Conta com
+    - code [ref=e7]: isAdmin
+    - text: "(ex.: seed"
+    - code [ref=e8]: admin@peladas.local
+    - text: /
+    - code [ref=e9]: password
+    - text: ).
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]: Email
+      - textbox "Email" [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]: Palavra-passe
+      - textbox "Palavra-passe" [ref=e16]
+    - button "Entrar" [ref=e17] [cursor=pointer]

@@ -1,12 +1,15 @@
-import { MatchMode } from "@prisma/client";
+import { MatchMode, MatchVisibility } from "@prisma/client";
 import {
   IsDateString,
   IsEnum,
   IsInt,
+  IsNotEmpty,
   IsObject,
   IsOptional,
   IsString,
+  IsUUID,
   Min,
+  ValidateIf,
 } from "class-validator";
 
 export class CreateMatchDto {
@@ -32,6 +35,17 @@ export class CreateMatchDto {
 
   @IsDateString()
   registrationClosesAt!: string;
+
+  @IsUUID()
+  venueId!: string;
+
+  @IsEnum(MatchVisibility)
+  visibility!: MatchVisibility;
+
+  @ValidateIf((o: CreateMatchDto) => o.visibility === MatchVisibility.GROUP)
+  @IsNotEmpty()
+  @IsUUID()
+  groupId?: string;
 
   @IsOptional()
   @IsObject()

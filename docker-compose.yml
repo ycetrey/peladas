@@ -19,16 +19,23 @@ services:
 
   api:
     build:
-      context: ./apps/api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/api/Dockerfile
+    working_dir: /repo/apps/api
     environment:
       DATABASE_URL: postgresql://peladas:peladas@db:5432/peladas?schema=public
       PORT: "3001"
       NODE_ENV: development
+      # Docker Desktop (Windows/macOS): ficheiros montados nem sempre disparam inotify; polling garante reload.
+      CHOKIDAR_USEPOLLING: "true"
+      JWT_SECRET: "${JWT_SECRET:-dev-jwt-secret-change-in-production}"
       WEB_JOGADOR_ORIGIN: "${WEB_JOGADOR_ORIGIN:-http://localhost:3002}"
+      WEB_ADMIN_ORIGIN: "${WEB_ADMIN_ORIGIN:-http://localhost:3003}"
     volumes:
-      - ./apps/api:/app
-      - api_node_modules:/app/node_modules
+      # Monorepo + node_modules em volumes anónimos (evita misturar com instalação do host sem JWT, etc.)
+      - .:/repo
+      - /repo/node_modules
+      - /repo/apps/api/node_modules
     ports:
       - "${API_PORT:-3001}:3001"
     depends_on:
@@ -39,14 +46,24 @@ services:
 
   web-jogador:
     build:
-      context: ./apps/web-jogador
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web-jogador/Dockerfile
+    working_dir: /repo/apps/web-jogador
     environment:
       NODE_ENV: development
+      DOCKER: "1"
+      JWT_SECRET: "${JWT_SECRET:-dev-jwt-secret-change-in-production}"
       NEXT_PUBLIC_API_BASE_URL: "${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3001}"
+      API_INTERNAL_BASE_URL: "http://api:3001"
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+      NEXT_WEBPACK_USE_POLLING: "1"
     volumes:
-      - ./apps/web-jogador:/app
-      - web_jogador_node_modules:/app/node_modules
+      - .:/repo
+      - /repo/node_modules
+      - /repo/apps/web-jogador/node_modules
+      # Evita misturar .next do host com Linux e reduz falhas de HMR em bind mounts.
+      - /repo/apps/web-jogador/.next
     ports:
       - "${WEB_JOGADOR_PORT:-3002}:3000"
     depends_on:
@@ -56,13 +73,23 @@ services:
 
   web-admin:
     build:
-      context: ./apps/web-admin
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web-admin/Dockerfile
+    working_dir: /repo/apps/web-admin
     environment:
       NODE_ENV: development
+      DOCKER: "1"
+      JWT_SECRET: "${JWT_SECRET:-dev-jwt-secret-change-in-production}"
+      NEXT_PUBLIC_API_BASE_URL: "${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3001}"
+      API_INTERNAL_BASE_URL: "http://api:3001"
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+      NEXT_WEBPACK_USE_POLLING: "1"
     volumes:
-      - ./apps/web-admin:/app
-      - web_admin_node_modules:/app/node_modules
+      - .:/repo
+      - /repo/node_modules
+      - /repo/apps/web-admin/node_modules
+      - /repo/apps/web-admin/.next
     ports:
       - "${WEB_ADMIN_PORT:-3003}:3000"
     depends_on:
@@ -72,9 +99,6 @@ services:
 
 volumes:
   postgres_data:
-  api_node_modules:
-  web_jogador_node_modules:
-  web_admin_node_modules:
 
 networks:
   peladas-internal:

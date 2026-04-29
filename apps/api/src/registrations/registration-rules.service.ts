@@ -5,9 +5,12 @@ import {
   type Match,
 } from "@prisma/client";
 import {
+  AbsenceBlockedByRegistrationError,
   MatchNotOpenError,
   NoRegistrationSlotsError,
+  RegistrationBlockedByAbsenceError,
   RegistrationClosedError,
+  UserMarkedAbsentError,
   UserAlreadyRegisteredError,
 } from "../common/errors/domain-errors";
 
@@ -51,5 +54,25 @@ export class RegistrationRulesService {
       return RegistrationStatus.SUBSTITUTE;
     }
     throw new NoRegistrationSlotsError();
+  }
+
+  assertNoActiveAbsence(activeAbsence: { id: string } | null | undefined): void {
+    if (activeAbsence != null) {
+      throw new RegistrationBlockedByAbsenceError();
+    }
+  }
+
+  assertNoDuplicateAbsence(activeAbsence: { id: string } | null | undefined): void {
+    if (activeAbsence != null) {
+      throw new UserMarkedAbsentError();
+    }
+  }
+
+  assertCanMarkAbsence(
+    activeRegistration: { id: string } | null | undefined,
+  ): void {
+    if (activeRegistration != null) {
+      throw new AbsenceBlockedByRegistrationError();
+    }
   }
 }

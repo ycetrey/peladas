@@ -1,0 +1,27 @@
+{
+  "source_path": "d:\\Fontes\\peladas\\peladas_business_rules_base.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "APP Peladas — Arquivos de Regras de Negócio",
+  "summary": "Proposes a NestJS matches module with domain enums, entities, DTOs, business errors, repository contracts, rules services, and use-case code for Peladas.",
+  "scope": [
+    "Peladas",
+    "NestJS",
+    "matches module",
+    "domain entities",
+    "enums",
+    "DTOs",
+    "business-rule errors",
+    "repository contracts",
+    "match-rules",
+    "registration-rules",
+    "team allocation",
+    "use cases",
+    "TypeScript"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Strong SPEC signals (data models, service logic, use cases). Sections 8–10 and the intro are advisory/guide-style, not ADR/PRD user stories."
+}
